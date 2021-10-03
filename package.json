@@ -138,7 +138,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=./custom-test-env.js",
-    "test:e2e": "start-server-and-test 'serve build -l 3000' http://localhost:3000 'cypress run --record'"
+    "test:e2e": "start-server-and-test 'serve build -l 3000' http://localhost:3000 'cypress run'",
+    "test:e2e:record": "start-server-and-test 'serve build -l 3000' http://localhost:3000 'cypress run --record'"
   },
   "eslintConfig": {
     "extends": "react-app",
