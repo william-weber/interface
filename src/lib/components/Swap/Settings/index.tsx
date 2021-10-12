@@ -4,7 +4,7 @@ import { Settings as SettingsIcon } from 'react-feather'
 
 import themed, { TYPE } from '../../../themed'
 import { ThemedButton, themedIcon } from '../../../themed/components'
-import Modal, { Body as ModalBody, Header as ModalHeader } from '../../Modal'
+import Modal, { Body, Header } from '../../Modal'
 import { useResetSettings } from '../state/hooks'
 import ExpertModeToggle from './ExpertModeToggle'
 import GasPriceSelect from './GasPriceSelect'
@@ -28,12 +28,12 @@ export function SettingsModal({ onClose }: { onClose: () => void }) {
   const resetSettings = useResetSettings()
   return (
     <Modal>
-      <ModalHeader title={<TYPE.title>Settings</TYPE.title>} onClose={onClose}>
+      <Header title={<TYPE.title>Settings</TYPE.title>} onClose={onClose}>
         <ThemedReset color="action" onClick={resetSettings}>
           Reset
         </ThemedReset>
-      </ModalHeader>
-      <ModalBody ref={setContainer}>
+      </Header>
+      <Body ref={setContainer}>
         <BoundaryProvider value={container}>
           <GasPriceSelect />
           <MaxSlippageSelect />
@@ -41,7 +41,7 @@ export function SettingsModal({ onClose }: { onClose: () => void }) {
           <ExpertModeToggle />
           <MultihopToggle />
         </BoundaryProvider>
-      </ModalBody>
+      </Body>
     </Modal>
   )
 }

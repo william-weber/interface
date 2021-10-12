@@ -1,7 +1,6 @@
 import { useAtom } from 'jotai'
-import { useContext } from 'react'
 
-import { StoreAtomContext } from '.'
+import { storeAtom } from '.'
 import {
   resetSettings,
   setExpertMode,
@@ -14,7 +13,7 @@ import {
 import { GasPrice, MaxSlippage } from './reducer'
 
 export function useSwapStore() {
-  return useAtom(useContext(StoreAtomContext))
+  return useAtom(storeAtom)
 }
 
 export function useShowDetails(): [boolean, () => void] {
