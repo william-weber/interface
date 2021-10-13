@@ -54,7 +54,12 @@ export default createReducer<SwapState>(initialState, (builder) =>
     .addCase(toggleShowDetails, (state) => {
       state.showDetails = !state.showDetails
     })
-    .addCase(resetSettings, (state) => ({ ...state, ...initialSettings }))
+    .addCase(resetSettings, (state) => ({
+      ...state,
+      ...initialSettings,
+      gasPrice: [GasPrice.DEFAULT, state.gasPrice[1]],
+      maxSlippage: [MaxSlippage.DEFAULT, state.maxSlippage[1]],
+    }))
     .addCase(setGasPrice, (state, { payload }) => {
       if (payload.length === 1) {
         state.gasPrice[0] = payload[0]
