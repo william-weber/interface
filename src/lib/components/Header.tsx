@@ -1,6 +1,5 @@
+import themed from 'lib/themed'
 import { ReactNode } from 'react'
-
-import themed from '../themed'
 
 const Row = themed.div`
   align-items: center;

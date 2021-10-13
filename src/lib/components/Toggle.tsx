@@ -1,4 +1,4 @@
-import themed from '../themed'
+import themed from 'lib/themed'
 
 const Input = themed.input`
   align-items: center;

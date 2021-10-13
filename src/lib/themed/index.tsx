@@ -8,6 +8,7 @@ import styled, {
 } from 'styled-components/macro'
 
 import { Colors, Theme } from './theme'
+export * from './components'
 export type { Colors, Theme } from './theme'
 
 const themed = styled as unknown as ThemedBaseStyledInterface<Theme>

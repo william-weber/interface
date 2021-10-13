@@ -1,7 +1,7 @@
+import { ThemedButton, themedIcon } from 'lib/themed'
 import { ReactNode } from 'react'
 import { X } from 'react-feather'
 
-import { ThemedButton, themedIcon } from '../../themed/components'
 import BaseHeader from '../Header'
 
 const ThemedXIcon = themedIcon(X, 'text')
