@@ -1,6 +1,6 @@
-import { PayloadActionCreator } from '@reduxjs/toolkit'
-import { selectAtom, useAtomValue, useUpdateAtom } from 'jotai/utils'
+import { useUpdateAtom } from 'jotai/utils'
 
+import useSelectedReducerAtom from '../../../utils/useSelectedReducerAtom'
 import { swapAtom } from '.'
 import {
   resetSettings,
@@ -11,26 +11,9 @@ import {
   toggleMultihop,
   toggleShowDetails,
 } from './actions'
-import { SwapState } from './reducer'
-
-function useSwap<Value, Payload>(
-  selector: (state: SwapState) => Value,
-  action: PayloadActionCreator<Payload>
-): [
-  Value,
-  Payload extends any[]
-    ? (...updates: Payload) => void
-    : Payload extends void
-    ? () => void
-    : (...updates: [Payload]) => void
-] {
-  const value = useAtomValue(selectAtom(swapAtom, selector))
-  const dispatch = useUpdateAtom(swapAtom)
-  return [value, (...args: any[]) => dispatch(action(args))]
-}
 
 export function useShowDetails() {
-  return useSwap(({ showDetails }) => showDetails, toggleShowDetails)
+  return useSelectedReducerAtom(swapAtom, ({ showDetails }) => showDetails, toggleShowDetails)
 }
 
 export function useResetSettings() {
@@ -39,21 +22,21 @@ export function useResetSettings() {
 }
 
 export function useGasPrice() {
-  return useSwap(({ gasPrice }) => gasPrice, setGasPrice)
+  return useSelectedReducerAtom(swapAtom, ({ gasPrice }) => gasPrice, setGasPrice)
 }
 
 export function useMaxSlippage() {
-  return useSwap(({ maxSlippage }) => maxSlippage, setMaxSlippage)
+  return useSelectedReducerAtom(swapAtom, ({ maxSlippage }) => maxSlippage, setMaxSlippage)
 }
 
 export function useTransactionDeadline() {
-  return useSwap(({ transactionDeadline }) => transactionDeadline, setTransactionDeadline)
+  return useSelectedReducerAtom(swapAtom, ({ transactionDeadline }) => transactionDeadline, setTransactionDeadline)
 }
 
 export function useExpertMode() {
-  return useSwap(({ expertMode }) => expertMode, toggleExpertMode)
+  return useSelectedReducerAtom(swapAtom, ({ expertMode }) => expertMode, toggleExpertMode)
 }
 
 export function useMultihop() {
-  return useSwap(({ multihop }) => multihop, toggleMultihop)
+  return useSelectedReducerAtom(swapAtom, ({ multihop }) => multihop, toggleMultihop)
 }
