@@ -1,7 +1,5 @@
-import { atomWithStore } from 'jotai/redux'
-import { createStore } from 'redux'
+import { atomWithReducer } from 'jotai/utils'
 
-import reducer, { SwapState } from './reducer'
+import reducer, { initialState } from './reducer'
 
-const store = createStore(reducer)
-export const storeAtom = atomWithStore<SwapState>(store)
+export const swapAtom = atomWithReducer(initialState, reducer)

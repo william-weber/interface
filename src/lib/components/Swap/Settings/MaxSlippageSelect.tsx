@@ -62,7 +62,7 @@ function CustomOption({ value, selected, onChange, onSelect }: CustomOptionProps
 }
 
 export default function MaxSlippageSelect() {
-  const { P01, P05, CUSTOM, DEFAULT } = MaxSlippage
+  const { P01, P05, CUSTOM } = MaxSlippage
   const [[maxSlippage, custom], setMaxSlippage] = useMaxSlippage()
   return (
     <>
@@ -74,9 +74,7 @@ export default function MaxSlippageSelect() {
         <Spacer />
         <CustomOption
           value={custom}
-          onChange={(value) => {
-            setMaxSlippage(value === undefined ? DEFAULT : CUSTOM, value)
-          }}
+          onChange={(value) => setMaxSlippage(CUSTOM, value)}
           onSelect={(value) => setMaxSlippage(CUSTOM, value)}
           selected={maxSlippage === CUSTOM}
         />

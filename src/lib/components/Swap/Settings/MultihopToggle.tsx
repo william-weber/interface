@@ -7,12 +7,12 @@ import Label from './Label'
 const tooltip = 'Lorem ipsum dolores park'
 
 export default function MultihopToggle() {
-  const [multihop, setMultihop] = useMultihop()
+  const [multihop, toggleMultihop] = useMultihop()
   return (
     <Row>
       <Label name="Multihop" tooltip={tooltip} />
       <TYPE.text>
-        <Toggle checked={multihop} onToggle={setMultihop} />
+        <Toggle checked={multihop} onToggle={toggleMultihop} />
       </TYPE.text>
     </Row>
   )

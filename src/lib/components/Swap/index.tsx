@@ -1,4 +1,4 @@
-import { Provider } from 'jotai'
+import { Provider as AtomProvider } from 'jotai'
 import { BoundaryProvider } from 'lib/components/Popover'
 import { useState } from 'react'
 
@@ -17,7 +17,7 @@ export default function Swap({ darkMode = true }: SwapProps) {
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
   return (
     <Widget darkMode={darkMode}>
-      <Provider>
+      <AtomProvider>
         <Header></Header>
         <div ref={setContainer}>
           <BoundaryProvider value={container}>
@@ -27,7 +27,7 @@ export default function Swap({ darkMode = true }: SwapProps) {
             <SubmitButton></SubmitButton>
           </BoundaryProvider>
         </div>
-      </Provider>
+      </AtomProvider>
     </Widget>
   )
 }

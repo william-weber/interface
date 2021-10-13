@@ -67,7 +67,7 @@ function CustomOption({ value, selected, onChange, onSelect }: CustomOptionProps
 }
 
 export default function GasPriceSelect() {
-  const { FAST, TRADER, CUSTOM, DEFAULT } = GasPrice
+  const { FAST, TRADER, CUSTOM } = GasPrice
   const [[gasPrice, custom], setGasPrice] = useGasPrice()
   return (
     <>
@@ -79,9 +79,7 @@ export default function GasPriceSelect() {
         <Spacer />
         <CustomOption
           value={custom}
-          onChange={(value) => {
-            setGasPrice(value === undefined ? DEFAULT : CUSTOM, value)
-          }}
+          onChange={(value) => setGasPrice(CUSTOM, value)}
           onSelect={(value) => setGasPrice(CUSTOM, value)}
           selected={gasPrice === CUSTOM}
         />

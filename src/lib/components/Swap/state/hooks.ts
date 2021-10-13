@@ -1,59 +1,59 @@
-import { useAtom } from 'jotai'
+import { PayloadActionCreator } from '@reduxjs/toolkit'
+import { selectAtom, useAtomValue, useUpdateAtom } from 'jotai/utils'
 
-import { storeAtom } from '.'
+import { swapAtom } from '.'
 import {
   resetSettings,
-  setExpertMode,
   setGasPrice,
   setMaxSlippage,
-  setMultihop,
   setTransactionDeadline,
+  toggleExpertMode,
+  toggleMultihop,
   toggleShowDetails,
 } from './actions'
-import { GasPrice, MaxSlippage } from './reducer'
+import { SwapState } from './reducer'
 
-export function useSwapStore() {
-  return useAtom(storeAtom)
+function useSwap<Value, Payload>(
+  selector: (state: SwapState) => Value,
+  action: PayloadActionCreator<Payload>
+): [
+  Value,
+  Payload extends any[]
+    ? (...updates: Payload) => void
+    : Payload extends void
+    ? () => void
+    : (...updates: [Payload]) => void
+] {
+  const value = useAtomValue(selectAtom(swapAtom, selector))
+  const dispatch = useUpdateAtom(swapAtom)
+  return [value, (...args: any[]) => dispatch(action(args))]
 }
 
-export function useShowDetails(): [boolean, () => void] {
-  const [{ showDetails }, dispatch] = useSwapStore()
-  return [showDetails, () => dispatch(toggleShowDetails())]
+export function useShowDetails() {
+  return useSwap(({ showDetails }) => showDetails, toggleShowDetails)
 }
 
 export function useResetSettings() {
-  const [, dispatch] = useSwapStore()
+  const dispatch = useUpdateAtom(swapAtom)
   return () => dispatch(resetSettings())
 }
 
-export function useGasPrice(): [[GasPrice, number | undefined], (value: GasPrice, custom?: number) => void] {
-  const [{ gasPrice, customGasPrice }, dispatch] = useSwapStore()
-  return [
-    [gasPrice, customGasPrice],
-    (gasPrice: GasPrice, customGasPrice?: number) => dispatch(setGasPrice({ gasPrice, customGasPrice })),
-  ]
+export function useGasPrice() {
+  return useSwap(({ gasPrice }) => gasPrice, setGasPrice)
 }
 
-export function useMaxSlippage(): [[MaxSlippage, number | undefined], (value: MaxSlippage, custom?: number) => void] {
-  const [{ maxSlippage, customMaxSlippage }, dispatch] = useSwapStore()
-  return [
-    [maxSlippage, customMaxSlippage],
-    (maxSlippage: MaxSlippage, customMaxSlippage?: number) =>
-      dispatch(setMaxSlippage({ maxSlippage, customMaxSlippage })),
-  ]
+export function useMaxSlippage() {
+  return useSwap(({ maxSlippage }) => maxSlippage, setMaxSlippage)
 }
 
-export function useTransactionDeadline(): [number, (value: number) => void] {
-  const [{ transactionDeadline }, dispatch] = useSwapStore()
-  return [transactionDeadline, (value: number) => dispatch(setTransactionDeadline(value))]
+export function useTransactionDeadline() {
+  return useSwap(({ transactionDeadline }) => transactionDeadline, setTransactionDeadline)
 }
 
-export function useExpertMode(): [boolean, (value: boolean) => void] {
-  const [{ expertMode }, dispatch] = useSwapStore()
-  return [expertMode, (value: boolean) => dispatch(setExpertMode(value))]
+export function useExpertMode() {
+  return useSwap(({ expertMode }) => expertMode, toggleExpertMode)
 }
 
-export function useMultihop(): [boolean, (value: boolean) => void] {
-  const [{ multihop }, dispatch] = useSwapStore()
-  return [multihop, (value: boolean) => dispatch(setMultihop(value))]
+export function useMultihop() {
+  return useSwap(({ multihop }) => multihop, toggleMultihop)
 }

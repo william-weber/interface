@@ -7,12 +7,12 @@ import Label from './Label'
 const tooltip = 'Allow high impact trades and skip the confirmation screen. Use at your own risk.'
 
 export default function ExpertModeToggle() {
-  const [expertMode, setExpertMode] = useExpertMode()
+  const [expertMode, toggleExpertMode] = useExpertMode()
   return (
     <Row>
       <Label name="Expert Mode" tooltip={tooltip} />
       <TYPE.text>
-        <Toggle checked={expertMode} onToggle={setExpertMode} />
+        <Toggle checked={expertMode} onToggle={toggleExpertMode} />
       </TYPE.text>
     </Row>
   )
