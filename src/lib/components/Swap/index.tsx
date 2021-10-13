@@ -1,7 +1,7 @@
 import { Provider as AtomProvider } from 'jotai'
-import { BoundaryProvider } from 'lib/components/Popover'
 import { useState } from 'react'
 
+import { BoundaryProvider } from '../Popover'
 import Widget from '../Widget'
 import Header from './Header'
 import InputPanel from './InputPanel'
