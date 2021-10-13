@@ -1,11 +1,10 @@
 import { Options, Placement } from '@popperjs/core'
+import useInterval from 'lib/hooks/useInterval'
 import themed, { Layer } from 'lib/themed'
 import maxSize from 'popper-max-size-modifier'
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { usePopper } from 'react-popper'
-
-import useInterval from '../../hooks/useInterval'
 
 const BoundaryContext = createContext<HTMLDivElement | null>(null)
 

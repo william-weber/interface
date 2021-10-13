@@ -1,6 +1,6 @@
 import { useUpdateAtom } from 'jotai/utils'
+import useSelectedReducerAtom from 'lib/hooks/useSelectedReducerAtom'
 
-import useSelectedReducerAtom from '../../../utils/useSelectedReducerAtom'
 import { swapAtom } from '.'
 import {
   resetSettings,
