@@ -1,6 +1,6 @@
+import { TYPE, useTheme } from 'lib/themed'
 import { useRef } from 'react'
 
-import { TYPE, useTheme } from '../../../themed'
 import { DecimalInput } from '../../NumericInput'
 import { useMaxSlippage } from '../state/hooks'
 import { MaxSlippage } from '../state/reducer'

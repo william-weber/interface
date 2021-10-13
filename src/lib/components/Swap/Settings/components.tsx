@@ -1,7 +1,6 @@
+import themed from 'lib/themed'
+import { themedIcon } from 'lib/themed/components'
 import { CheckCircle } from 'react-feather'
-
-import themed from '../../../themed'
-import { themedIcon } from '../../../themed/components'
 
 export const Line = themed.div`
   align-items: center;

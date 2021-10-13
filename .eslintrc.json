@@ -62,10 +62,6 @@
           },
           {
             "group": ["!styled-components/macro"]
-          },
-          {
-            "group": ["**/lib/*/**"],
-            "message": "Please import from the top-level lib/* to enforce modularity."
           }
         ]
       }

@@ -1,4 +1,4 @@
-import { ThemedButton, themedIcon } from 'lib/themed'
+import { ThemedButton, themedIcon } from 'lib/themed/components'
 import { ReactNode } from 'react'
 import { X } from 'react-feather'
 

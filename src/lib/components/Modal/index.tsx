@@ -1,7 +1,6 @@
+import themed, { Colors, Layer, useTheme } from 'lib/themed'
 import { createContext, ReactNode, useContext } from 'react'
 import { createPortal } from 'react-dom'
-
-import themed, { Colors, Layer, useTheme } from '../../themed'
 
 export { default as Header } from './Header'
 

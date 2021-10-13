@@ -1,4 +1,5 @@
-import { TYPE } from '../../../themed'
+import { TYPE } from 'lib/themed'
+
 import Toggle from '../../Toggle'
 import { useMultihop } from '../state/hooks'
 import { Row } from './components'

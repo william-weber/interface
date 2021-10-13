@@ -1,8 +1,8 @@
+import themed, { TYPE } from 'lib/themed'
+import { ThemedButton, themedIcon } from 'lib/themed/components'
 import { useState } from 'react'
 import { Settings as SettingsIcon } from 'react-feather'
 
-import themed, { TYPE } from '../../../themed'
-import { ThemedButton, themedIcon } from '../../../themed/components'
 import Modal, { Body, Header } from '../../Modal'
 import { BoundaryProvider } from '../../Popover'
 import { useResetSettings } from '../state/hooks'

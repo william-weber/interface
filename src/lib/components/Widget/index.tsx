@@ -1,6 +1,6 @@
+import themed, { getTheme, Provider as ThemeProvider } from 'lib/themed'
 import { ReactNode, useMemo, useState } from 'react'
 
-import themed, { getTheme, Provider as ThemeProvider } from '../../themed'
 import { Provider as ModalProvider } from '../Modal'
 
 const Wrapper = themed.div`

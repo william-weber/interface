@@ -1,8 +1,8 @@
+import themed, { TYPE } from 'lib/themed'
+import { themedIcon } from 'lib/themed/components'
 import { useState } from 'react'
 import { HelpCircle } from 'react-feather'
 
-import themed, { TYPE } from '../../../themed'
-import { themedIcon } from '../../../themed/components'
 import Popover from '../../Popover'
 
 const ThemedHelpCircle = themed(themedIcon(HelpCircle))`

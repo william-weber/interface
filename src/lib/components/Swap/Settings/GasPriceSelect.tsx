@@ -1,6 +1,6 @@
+import { TYPE, useTheme } from 'lib/themed'
 import { useRef } from 'react'
 
-import { TYPE, useTheme } from '../../../themed'
 import { IntegerInput } from '../../NumericInput'
 import { useGasPrice } from '../state/hooks'
 import { GasPrice } from '../state/reducer'

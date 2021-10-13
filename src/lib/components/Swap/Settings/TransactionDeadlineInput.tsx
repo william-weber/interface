@@ -1,6 +1,6 @@
+import { TYPE } from 'lib/themed'
 import { useRef } from 'react'
 
-import { TYPE } from '../../../themed'
 import { IntegerInput } from '../../NumericInput'
 import { useTransactionDeadline } from '../state/hooks'
 import { Bordered, Row } from './components'

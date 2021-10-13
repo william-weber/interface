@@ -1,6 +1,6 @@
+import { inlaidIcon, ThemedButton } from 'lib/themed/components'
 import { Info, Minus, Plus } from 'react-feather'
 
-import { inlaidIcon, ThemedButton } from '../../themed/components'
 import { useShowDetails } from './state/hooks'
 
 const InfoPlus = inlaidIcon(Info, Plus)

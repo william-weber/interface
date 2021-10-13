@@ -1,7 +1,7 @@
+import Logo from 'lib/assets/Logo'
+import themed, { TYPE, useTheme } from 'lib/themed'
 import { ReactNode } from 'react'
 
-import Logo from '../../assets/Logo'
-import themed, { TYPE, useTheme } from '../../themed'
 import BaseHeader from '../Header'
 
 const LogoWrapper = themed.div`
