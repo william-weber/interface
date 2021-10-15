@@ -1,5 +1,4 @@
-import { Provider as AtomProvider } from 'jotai'
-import { useRef } from 'react'
+import { useState } from 'react'
 
 import { BoundaryProvider } from '../Popover'
 import Widget from '../Widget'
@@ -7,6 +6,7 @@ import Header from './Header'
 import InputPanel from './InputPanel'
 import OutputPanel from './OutputPanel'
 import ReverseButton from './ReverseButton'
+import SwapStateProvider from './state'
 import SubmitButton from './SubmitButton'
 
 export interface SwapProps {
@@ -14,12 +14,12 @@ export interface SwapProps {
 }
 
 export default function Swap({ darkMode = true }: SwapProps) {
-  const boundary = useRef<HTMLDivElement>(null)
+  const [boundary, setBoundary] = useState<HTMLDivElement | null>(null)
   return (
     <Widget darkMode={darkMode}>
-      <AtomProvider>
+      <SwapStateProvider>
         <Header></Header>
-        <div ref={boundary}>
+        <div ref={setBoundary}>
           <BoundaryProvider value={boundary}>
             <InputPanel></InputPanel>
             <ReverseButton></ReverseButton>
@@ -27,7 +27,7 @@ export default function Swap({ darkMode = true }: SwapProps) {
             <SubmitButton></SubmitButton>
           </BoundaryProvider>
         </div>
-      </AtomProvider>
+      </SwapStateProvider>
     </Widget>
   )
 }

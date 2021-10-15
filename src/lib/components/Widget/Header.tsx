@@ -30,7 +30,7 @@ function Title({ path, title }: Omit<HeaderProps, 'children'>) {
         <StyledLogo />
       </a>
       <span style={{ width: 8 }} />
-      <TYPE.title>{title}</TYPE.title>
+      <TYPE.header>{title}</TYPE.header>
     </>
   )
 }

@@ -39,68 +39,76 @@ interface InputProps extends Omit<HTMLProps<HTMLInputElement>, 'onChange' | 'as'
   onUserInput: (input: number | undefined) => void
 }
 
-export const InputFactory = (enforcer: (nextUserInput: string) => string | undefined | null, pattern: string) =>
-  forwardRef<HTMLInputElement, InputProps>(function Input({ value, onUserInput, ...props }: InputProps, ref) {
-    // Allow value/onUserInput to use number by preventing a  trailing decimal separator from triggering onUserInput
-    const [state, setState] = useState(value ?? '')
-    useEffect(() => {
-      if (+state !== value) {
-        setState(value ?? '')
-      }
-    }, [value, state, setState])
+interface EnforcedInputProps extends InputProps {
+  // Validates nextUserInput; returns stringified value or undefined if valid, or null if invalid
+  enforcer: (nextUserInput: string) => string | undefined | null
+}
 
-    return (
-      <StyledInput
-        value={state}
-        onChange={(event) => {
-          const nextInput = enforcer(event.target.value.replace(/,/g, '.'))
-          if (nextInput !== null) {
-            setState(nextInput ?? '')
-            if (nextInput === undefined || +nextInput !== value) {
-              onUserInput(nextInput === undefined ? undefined : +nextInput)
-            }
+const Input = forwardRef<HTMLInputElement, EnforcedInputProps>(function Input(
+  { value, onUserInput, enforcer, pattern, ...props }: EnforcedInputProps,
+  ref
+) {
+  // Allow value/onUserInput to use number by preventing a  trailing decimal separator from triggering onUserInput
+  const [state, setState] = useState(value ?? '')
+  useEffect(() => {
+    if (+state !== value) {
+      setState(value ?? '')
+    }
+  }, [value, state, setState])
+
+  return (
+    <StyledInput
+      value={state}
+      onChange={(event) => {
+        const nextInput = enforcer(event.target.value.replace(/,/g, '.'))
+        if (nextInput !== null) {
+          setState(nextInput ?? '')
+          if (nextInput === undefined || +nextInput !== value) {
+            onUserInput(nextInput === undefined ? undefined : +nextInput)
           }
-        }}
-        // universal input options
-        inputMode="decimal"
-        autoComplete="off"
-        autoCorrect="off"
-        // text-specific options
-        type="text"
-        pattern={pattern}
-        placeholder={props.placeholder || '0'}
-        minLength={1}
-        spellCheck="false"
-        ref={ref as any}
-        {...props}
-      />
-    )
-  })
+        }
+      }}
+      // universal input options
+      inputMode="decimal"
+      autoComplete="off"
+      autoCorrect="off"
+      // text-specific options
+      type="text"
+      pattern={pattern}
+      placeholder={props.placeholder || '0'}
+      minLength={1}
+      spellCheck="false"
+      ref={ref as any}
+      {...props}
+    />
+  )
+})
 
-export const IntegerInput = InputFactory(
-  (() => {
-    const regexp = /^\d*$/
-    return (nextUserInput: string) => {
-      if (nextUserInput === '' || regexp.test(nextUserInput)) {
-        const nextInput = parseInt(nextUserInput)
-        return isNaN(nextInput) ? undefined : nextInput.toString()
-      }
-      return null
+export const IntegerInput = (() => {
+  const regexp = /^\d*$/
+  const enforcer = (nextUserInput: string) => {
+    if (nextUserInput === '' || regexp.test(nextUserInput)) {
+      const nextInput = parseInt(nextUserInput)
+      return isNaN(nextInput) ? undefined : nextInput.toString()
     }
-  })(),
-  '^[0-9]*$'
-)
-export const DecimalInput = InputFactory(
-  (() => {
-    const regexp = /^\d*(?:[\.])?\d*$/
-    return (nextUserInput: string) => {
-      if (nextUserInput === '') {
-        return undefined
-      } else if (regexp.test(nextUserInput)) {
-        return nextUserInput
-      }
-      return null
+    return null
+  }
+  return forwardRef(function IntegerInput(props: InputProps, ref) {
+    return <Input pattern="^[0-9]*$" enforcer={enforcer} ref={ref as any} {...props} />
+  })
+})()
+
+export const DecimalInput = (() => {
+  const regexp = /^\d*(?:[\.])?\d*$/
+  const enforcer = (nextUserInput: string) => {
+    if (nextUserInput === '') {
+      return undefined
+    } else if (regexp.test(nextUserInput)) {
+      return nextUserInput
     }
-  })(),
-  '^[0-9]*[.,]?[0-9]*$'
-)
+    return null
+  }
+  return forwardRef(function DecimalInput(props: InputProps, ref) {
+    return <Input pattern="^[0-9]*[.,]?[0-9]*$" enforcer={enforcer} ref={ref as any} {...props} />
+  })
+})()

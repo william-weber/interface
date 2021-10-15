@@ -1,4 +1,4 @@
-import styled from 'lib/styled'
+import styled, { TYPE } from 'lib/styled'
 
 const Input = styled.input`
   align-items: center;
@@ -42,6 +42,7 @@ const Input = styled.input`
   :after {
     color: ${({ theme }) => theme.text};
     content: 'OFF';
+    font-weight: 500;
     margin-left: 28px;
     opacity: ${({ theme }) => theme.accentOpacity};
     text-align: center;
@@ -65,5 +66,9 @@ interface ToggleProps {
 }
 
 export default function Toggle({ checked, onToggle }: ToggleProps) {
-  return <Input type="checkbox" checked={checked} onChange={({ target: { checked } }) => onToggle(checked)} />
+  return (
+    <TYPE.text>
+      <Input type="checkbox" checked={checked} onChange={({ target: { checked } }) => onToggle(checked)} />
+    </TYPE.text>
+  )
 }

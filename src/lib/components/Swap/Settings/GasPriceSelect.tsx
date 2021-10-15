@@ -1,9 +1,9 @@
+import { useAtom } from 'jotai'
 import { TYPE, useTheme } from 'lib/styled'
-import { useRef } from 'react'
+import { useCallback, useRef } from 'react'
 
 import { IntegerInput } from '../../NumericInput'
-import { useGasPrice } from '../state/hooks'
-import { GasPrice } from '../state/reducer'
+import { GasPrice, gasPriceAtom } from '../state'
 import { Line, Option as BaseOption, Row, Selected, Spacer } from './components'
 import Label from './Label'
 
@@ -23,7 +23,7 @@ function Option({ name, value, selected, onSelect }: OptionProps) {
         <TYPE.text>{name}</TYPE.text>
         {selected && <Selected />}
       </Line>
-      <TYPE.subtext accent>{value} gwei</TYPE.subtext>
+      <TYPE.text accent>{value} gwei</TYPE.text>
     </BaseOption>
   )
 }
@@ -37,17 +37,17 @@ function CustomOption({ value, selected, onChange, onSelect }: CustomOptionProps
   const input = useRef<HTMLInputElement>(null)
   const theme = useTheme()
   const borderColor = selected ? theme.selected : undefined
-  const focus = () => {
+  const focus = useCallback(() => {
     input.current?.focus()
     value !== undefined && onSelect(value)
-  }
+  }, [input, value, onSelect])
   return (
     <BaseOption style={{ borderColor }} onClick={focus}>
       <Line>
         <TYPE.text>Custom</TYPE.text>
         {selected && <Selected />}
       </Line>
-      <TYPE.subtext style={{ display: 'flex' }} accent>
+      <TYPE.text style={{ display: 'flex' }} accent>
         <IntegerInput
           style={{ width: '3ch' }}
           value={value}
@@ -57,14 +57,14 @@ function CustomOption({ value, selected, onChange, onSelect }: CustomOptionProps
           ref={input}
         />
         <span>&emsp;gwei</span>
-      </TYPE.subtext>
+      </TYPE.text>
     </BaseOption>
   )
 }
 
 export default function GasPriceSelect() {
   const { FAST, TRADER, CUSTOM } = GasPrice
-  const [[gasPrice, custom], setGasPrice] = useGasPrice()
+  const [[gasPrice, custom], setGasPrice] = useAtom(gasPriceAtom)
   return (
     <>
       <Label name="Gas Price" />
@@ -75,8 +75,8 @@ export default function GasPriceSelect() {
         <Spacer />
         <CustomOption
           value={custom}
-          onChange={(value) => setGasPrice(CUSTOM, value)}
-          onSelect={(value) => setGasPrice(CUSTOM, value)}
+          onChange={(value) => setGasPrice([CUSTOM, value])}
+          onSelect={(value) => setGasPrice([CUSTOM, value])}
           selected={gasPrice === CUSTOM}
         />
       </Row>

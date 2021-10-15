@@ -1,15 +1,16 @@
+import { useAtom } from 'jotai'
 import { TYPE } from 'lib/styled'
 import { useRef } from 'react'
 
 import { IntegerInput } from '../../NumericInput'
-import { useTransactionTtl } from '../state/hooks'
+import { transactionTtlAtom } from '../state'
 import { Bordered, Row } from './components'
 import Label from './Label'
 
 const tooltip = 'Your transaction will revert if it has not occured by this deadline.'
 
 export default function TransactionTtlInput() {
-  const [transactionTtl, setTransactionTtl] = useTransactionTtl()
+  const [transactionTtl, setTransactionTtl] = useAtom(transactionTtlAtom)
   const input = useRef<HTMLInputElement>(null)
   return (
     <>

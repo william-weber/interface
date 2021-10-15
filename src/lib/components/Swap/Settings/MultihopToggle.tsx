@@ -1,18 +1,16 @@
-import { TYPE } from 'lib/styled'
+import { useAtom } from 'jotai'
 
 import Toggle from '../../Toggle'
-import { useMultihop } from '../state/hooks'
+import { multihopAtom } from '../state'
 import { Row } from './components'
 import Label from './Label'
 
 export default function MultihopToggle() {
-  const [multihop, toggleMultihop] = useMultihop()
+  const [multihop, toggleMultihop] = useAtom(multihopAtom)
   return (
     <Row>
       <Label name="Multihop" />
-      <TYPE.text>
-        <Toggle checked={multihop} onToggle={toggleMultihop} />
-      </TYPE.text>
+      <Toggle checked={multihop} onToggle={toggleMultihop} />
     </Row>
   )
 }

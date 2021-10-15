@@ -60,29 +60,31 @@ export function Provider({ theme, children }: ThemeProviderProps) {
 
 interface TextProps extends Omit<TextPropsWithCss, 'css'> {
   accent?: boolean
+  bold?: boolean
 }
 
-const TextWrapper = themed(Text)<{ accent: boolean; color?: keyof Colors }>`
-  font-family: ${({ theme }) => theme.font};
+const TextWrapper = themed(Text)<{ accent: boolean; bold: boolean; color?: keyof Colors }>`
+  font-weight: ${(bold) => (bold ? 600 : 400)};
   color: ${({ color = 'text' as keyof Colors, theme }) => (theme as Theme)[color]};
+  font-family: ${({ theme }) => theme.font};
   opacity: ${({ accent, theme }) => (accent ? theme.accentOpacity : 1.0)};
 `
 
 export const TYPE = {
-  title(props: TextProps) {
-    return <TextWrapper fontWeight={600} fontSize={16} {...props} />
+  header(props: TextProps) {
+    return <TextWrapper fontSize={16} bold {...props} />
   },
   label(props: TextProps) {
-    return <TextWrapper fontWeight={600} fontSize={12} {...props} />
+    return <TextWrapper fontSize={14} bold {...props} />
   },
   detail(props: TextProps) {
-    return <TextWrapper fontWeight={400} fontSize={12} {...props} />
+    return <TextWrapper fontSize={12} {...props} />
   },
   text(props: TextProps) {
-    return <TextWrapper fontWeight={600} fontSize={14} {...props} />
+    return <TextWrapper fontSize={14} {...props} />
   },
-  subtext(props: TextProps) {
-    return <TextWrapper fontWeight={400} fontSize={14} {...props} />
+  button(props: TextProps) {
+    return <TextWrapper fontSize={20} {...props} />
   },
 }
 

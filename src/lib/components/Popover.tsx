@@ -2,11 +2,11 @@ import { Options, Placement } from '@popperjs/core'
 import useInterval from 'lib/hooks/useInterval'
 import styled, { Layer } from 'lib/styled'
 import maxSize from 'popper-max-size-modifier'
-import React, { createContext, RefObject, useCallback, useContext, useMemo, useRef, useState } from 'react'
+import React, { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { usePopper } from 'react-popper'
 
-const BoundaryContext = createContext<RefObject<HTMLDivElement> | null>(null)
+const BoundaryContext = createContext<HTMLDivElement | null>(null)
 
 export const BoundaryProvider = BoundaryContext.Provider
 
@@ -82,7 +82,7 @@ export interface PopoverProps {
 }
 
 export default function Popover({ content, show, children, placement = 'auto' }: PopoverProps) {
-  const { current: boundary } = useContext(BoundaryContext) || {}
+  const boundary = useContext(BoundaryContext)
   const reference = useRef<HTMLDivElement>(null)
 
   // Use callback refs to be notified when instantiated

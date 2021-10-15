@@ -1,9 +1,9 @@
+import { useAtom } from 'jotai'
 import { TYPE, useTheme } from 'lib/styled'
-import { useRef } from 'react'
+import { useCallback, useRef } from 'react'
 
 import { DecimalInput } from '../../NumericInput'
-import { useMaxSlippage } from '../state/hooks'
-import { MaxSlippage } from '../state/reducer'
+import { MaxSlippage, maxSlippageAtom } from '../state'
 import { Line, Option as BaseOption, Row, Selected, Spacer } from './components'
 import Label from './Label'
 
@@ -37,10 +37,10 @@ function CustomOption({ value, selected, onChange, onSelect }: CustomOptionProps
   const input = useRef<HTMLInputElement>(null)
   const theme = useTheme()
   const borderColor = selected ? theme.selected : undefined
-  const focus = () => {
+  const focus = useCallback(() => {
     input.current?.focus()
     value !== undefined && onSelect(value)
-  }
+  }, [input, value, onSelect])
   return (
     <BaseOption style={{ borderColor }} onClick={focus}>
       <Line>
@@ -61,7 +61,7 @@ function CustomOption({ value, selected, onChange, onSelect }: CustomOptionProps
 
 export default function MaxSlippageSelect() {
   const { P01, P05, CUSTOM } = MaxSlippage
-  const [[maxSlippage, custom], setMaxSlippage] = useMaxSlippage()
+  const [[maxSlippage, custom], setMaxSlippage] = useAtom(maxSlippageAtom)
   return (
     <>
       <Label name="Max Slippage" tooltip={tooltip} />
@@ -72,8 +72,8 @@ export default function MaxSlippageSelect() {
         <Spacer />
         <CustomOption
           value={custom}
-          onChange={(value) => setMaxSlippage(CUSTOM, value)}
-          onSelect={(value) => setMaxSlippage(CUSTOM, value)}
+          onChange={(value) => setMaxSlippage([CUSTOM, value])}
+          onSelect={(value) => setMaxSlippage([CUSTOM, value])}
           selected={maxSlippage === CUSTOM}
         />
       </Row>

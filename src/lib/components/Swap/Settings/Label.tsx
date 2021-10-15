@@ -27,7 +27,9 @@ export default function Label({ name, tooltip }: LabelProps) {
   const [show, setShow] = useState(false)
   return (
     <Wrapper>
-      <TYPE.label style={{ marginRight: 8 }}>{name}</TYPE.label>
+      <TYPE.detail bold style={{ marginRight: 8 }}>
+        {name}
+      </TYPE.detail>
       {tooltip && (
         <TYPE.text>
           <Popover content={<TYPE.detail>{tooltip}</TYPE.detail>} show={show} placement="top">

@@ -1,11 +1,12 @@
+import { useResetAtom } from 'jotai/utils'
 import styled, { TYPE } from 'lib/styled'
 import { StyledButton, styledIcon } from 'lib/styled/components'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { Settings as SettingsIcon } from 'react-feather'
 
 import Modal, { Body, Header } from '../../Modal'
 import { BoundaryProvider } from '../../Popover'
-import { useResetSettings } from '../state/hooks'
+import { settingsAtom } from '../state'
 import ExpertModeToggle from './ExpertModeToggle'
 import GasPriceSelect from './GasPriceSelect'
 import MaxSlippageSelect from './MaxSlippageSelect'
@@ -24,16 +25,16 @@ const StyledReset = styled(TYPE.text)`
 `
 
 export function SettingsModal({ onClose }: { onClose: () => void }) {
-  const boundary = useRef<HTMLDivElement>(null)
-  const resetSettings = useResetSettings()
+  const [boundary, setBoundary] = useState<HTMLDivElement | null>(null)
+  const resetSettings = useResetAtom(settingsAtom)
   return (
     <Modal>
-      <Header title={<TYPE.title>Settings</TYPE.title>} onClose={onClose}>
+      <Header title={<TYPE.header>Settings</TYPE.header>} onClose={onClose}>
         <StyledReset color="action" onClick={resetSettings}>
           Reset
         </StyledReset>
       </Header>
-      <Body ref={boundary}>
+      <Body ref={setBoundary}>
         <BoundaryProvider value={boundary}>
           <GasPriceSelect />
           <MaxSlippageSelect />
